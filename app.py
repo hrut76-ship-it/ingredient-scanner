@@ -1,5 +1,0 @@
-Plaintext
-
-streamlit
-pytesseract
-Pillow
