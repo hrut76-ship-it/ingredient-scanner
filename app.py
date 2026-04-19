@@ -8,9 +8,7 @@ st.title("🛒 Margaret's Scanner")
 pic = st.camera_input("Scan / Escanear")
 
 if pic:
-    txt = pytesseract.image_to_string(Image.open(pic)).lower()
-    res = "GREEN"
-    found = []
+    txt pytesseract.image_to_string(Image.open(pic), lang='spa+eng').lower()
     
     for level in ["RED", "ORANGE", "YELLOW"]:
         hits = [i for i in rules[level] if i in txt]
