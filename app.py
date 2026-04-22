@@ -1,19 +1,27 @@
 
-import streamlit as st
+    import streamlit as st
 from PIL import Image, ImageOps, ImageEnhance
 import pytesseract
 from data import rules
 
-st.set_page_config(page_title="Margaret Food Guard", layout="centered")
 st.title("🛒 Margaret's Scanner")
-st.write("English & Español")
 
-pic = st.camera_input("Scan / Escanear")
+# Added an option to upload so she can use her phone's better camera app
+mode = st.radio("Choose source:", ["Live Camera", "Upload Photo"])
+
+if mode == "Live Camera":
+    pic = st.camera_input("Scan / Escanear")
+else:
+    pic = st.file_uploader("Upload label photo", type=['jpg', 'png', 'jpeg'])
 
 if pic:
-    # --- SUPER VISION STEPS ---
-    img = Image.open(pic)
+    # --- SUPER VISION ---
+    img = Image.open(pic).convert('L')
+    img = ImageEnhance.Contrast(img).enhance(2.5) # Made contrast even stronger
     
+    txt = pytesseract.image_to_string(img, lang='spa+eng').lower()
+    
+    # ... (the rest of the logic remains the same)
     # 1. Turn to Black & White (makes text pop)
     img = img.convert('L') 
     
